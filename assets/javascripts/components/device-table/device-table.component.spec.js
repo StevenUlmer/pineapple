@@ -88,4 +88,42 @@ describe('Component: deviceTable', function() {
       }, 0);
     });
   });
+
+  describe('search', function() {
+    var allRows;
+    
+    beforeAll(function () {
+      allRows = [
+        ['Five', 'Two'],
+        ['Three', 'Five']
+      ]
+      vm.allRows = allRows;
+      vm.searchTerm = "Five";
+      if (!String.prototype.includes) {
+        String.prototype.includes = function() {'use strict';
+          return String.prototype.indexOf.apply(this, arguments) !== -1;
+        };
+      }
+    });
+
+    it('filters by search Term', function(done) {
+      scope.search();
+      scope.$digest();
+      setTimeout(function() {
+        expect(vm.collection.rows).toEqual(allRows);
+        done();
+      }, 0);
+    });
+
+    it('filters by checked column', function(done) {
+      vm.checkBoxes[0] = false;
+      scope.search();
+      scope.$digest();
+      setTimeout(function() {
+        expect(vm.collection.rows).toEqual([allRows[1]]);
+        done();
+      }, 0);
+    });
+
+  });
 });

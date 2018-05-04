@@ -1,5 +1,10 @@
 <table class="table">
   <caption>Company Devices</caption>
+  <div>Search: <input type="search" ng-model="$ctrl.searchTerm" ng-keyup="search()"></div>
+  <div>
+    Filter By:
+    <ul><li ng-repeat="header in $ctrl.collection.headers track by $index"><input type="checkbox" ng-model="$ctrl.checkBoxes[$index]" ng-change="search()">{{header.full_label}}</li></ul>
+  </div>
   <thead>
     <tr>
       <th ng-repeat="header in $ctrl.collection.headers track by $index"
